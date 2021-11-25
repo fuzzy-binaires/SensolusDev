@@ -1,4 +1,5 @@
 import requests
+import json
 
 url = "https://stickntrack.sensolus.com/rest/api/v2/devices/WQ9ENJ"
 
@@ -12,4 +13,8 @@ headers = {
 
 response = requests.request("GET", url, data=payload, headers=headers, params=querystring)
 
-print(response.text)
+print(response.text) ## RAW RESPONSE
+print("=================")
+
+data = json.loads(response.text) ## loads RETURNS A DICTIONARY
+print('Name of Tracker: ', data['name'])
