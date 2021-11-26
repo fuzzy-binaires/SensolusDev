@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import requests
 import json
 import os
@@ -54,7 +56,7 @@ def sendQuery(otherParams, flags):
 
     data = json.loads(response.text) ## loads RETURNS A DICTIONARY
     ##print('Name of Tracker: ', data['name'])
-    
+
     ## PRINT SOME OF THE GEOLOCATOIN DATA
     for i in range(len(data)):
         print("Visit " + str(i) + " => " + data[i]["geozoneName"] + " @ " + data[i]["entryTime"])
