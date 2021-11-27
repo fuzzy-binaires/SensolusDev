@@ -9,6 +9,10 @@ def associate_geo_zones():
     :return: dictionary associating geo zone names to text section from corpus
     """
     geo_zone_list = tracker_request.get_geo_zone_list()
+
+    if len(geo_zone_list) == 0:
+        raise Exception('empty geo zone list')
+
     text_len = len(text_corpus.contract_text)
 
     # generate random unique indices, ensure using the min available range
