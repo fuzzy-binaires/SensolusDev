@@ -20,7 +20,6 @@ def initialize():
     else:
         raise Exception('Environment file not found')
 
-
 dateObject = {
     "from": {
         "month": 10,
@@ -51,23 +50,21 @@ def build_date_string_param(dates):
 
 
 def get_geo_zone_activity(device_serial, dates):
-    geozone_data = {"queryType": "geozonevisits/", "device": device_serial, "timeFrame": build_date_string_param(dates)}
-    this_flags = "&reevaluate=true"  # NEEDED TO CHECK PAST GEO ZONE ACTIVITY
-    send_query(geozone_data, this_flags)
+    geozone_data = {"queryType": "geozonevisits", "timeFrame": build_date_string_param(dates), "flags":"&reevaluate=true"}
+    send_query(geozone_data["queryType"], device_serial, geozone_data)
 
 
-def send_query(other_params, flags):
-    url = "https://stickntrack.sensolus.com/rest/api/v2/" + other_params["queryType"] + other_params["device"]
+def send_query(queryType, device_serial, specific_params):
+    url = "https://stickntrack.sensolus.com/rest/api/v2/" + queryType + "/" + device_serial
 
-    querystring = "apiKey=" + apiKey + other_params[
-        "timeFrame"] + flags + "&_csrf=a24c8521-aa26-446d-8e65-4f24436bb888%20-H%20%22accept:%20application/json%22"
+    params_string = "apiKey=" + apiKey + specific_params[
+        "timeFrame"] + specific_params["flags"] + "&_csrf=a24c8521-aa26-446d-8e65-4f24436bb888%20-H%20%22accept:%20application/json%22"
     payload = ""
     headers = {
         'cache-control': "no-cache",
-        # 'Postman-Token': "c2a5e613-80d5-415b-8905-903580310ff9"
     }
 
-    response = requests.request("GET", url, data=payload, headers=headers, params=querystring)
+    response = requests.request("GET", url, data=payload, headers=headers, params=params_string)
 
     # print(response.request.url) ## PRINTING THE URL ORIGINALLY CREATED TO SEND THE QUERY
     print("=================")
