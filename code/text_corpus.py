@@ -16,7 +16,7 @@ def modify_text(text):
     return text.replace('<NOUN>', get_noun()).replace('<VERB>', get_verb())
 
 
-text_corpus = [
+contract_text = [
     # from section 1
     """
     Agreement: the collective term for all <NOUN> related to the Solution, applicable between the Customer
