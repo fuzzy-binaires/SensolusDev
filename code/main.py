@@ -11,6 +11,8 @@ if __name__ == '__main__':
 
         print(geo_zone_dict)
 
+        tracker_request.get_geo_zone_activity(tracker_request.deviceSerial, tracker_request.dateObject)
+
     except Exception as err:
         print(err)
         exit(1)
