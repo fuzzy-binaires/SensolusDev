@@ -77,8 +77,3 @@ contract_text = [
     orders, unless it concerns orders within a larger <NOUN> agreement.
     """
 ]
-print(modify_text(text_corpus[0]))
-print(modify_text(text_corpus[0]))
-print(modify_text(text_corpus[0]))
-
-print(random.choice(text_corpus))
