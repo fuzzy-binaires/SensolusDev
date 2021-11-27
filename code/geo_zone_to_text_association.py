@@ -16,8 +16,8 @@ def associate_geo_zones_to_text_corpus():
                                         min(text_len, len(geo_zone_list)))
     geo_zone_to_text_map = {}
 
-    for geo_zone in geo_zone_list:
+    for k, geo_zone in enumerate(geo_zone_list):
         # make sure association wraps around in case we have fewer text entries then geo zones
-        geo_zone_to_text_map[geo_zone] = random_text_indices % text_len
+        geo_zone_to_text_map[geo_zone] = random_text_indices[k % text_len]
 
     return geo_zone_to_text_map
