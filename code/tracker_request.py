@@ -32,7 +32,7 @@ dateObject = {
 def get_geo_zone_list():
     """
 
-    :return: a list of unique strings representing the geo zones
+    :return: a list of unique strings representing the geo zones // RAD!!
     """
     return []
 
