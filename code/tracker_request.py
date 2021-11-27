@@ -5,16 +5,20 @@ import json
 from os.path import isfile
 from envparse import env
 
-# make sure the file exists
-# if isfile('.env'):
-    # env.read_envfile('.env')
-try:
-    env.read_envfile()
-except:
-    raise Exception(' ==> Environment file not found')
+apiKey = None
+deviceSerial = None
 
-apiKey = env.str('API_KEY')
-deviceSerial = env.str('DEVICE_0')
+
+def initialize():
+    global apiKey
+    global deviceSerial
+    # make sure the file exists
+    if isfile('.env'):
+        env.read_envfile('.env')
+        apiKey = env.str('API_KEY')
+        deviceSerial = env.str('DEVICE_0')
+    else:
+        raise Exception('Environment file not found')
 
 dateObject = {
     "from": {
@@ -74,5 +78,3 @@ def send_query(queryType, device_serial, specific_params):
     for i in range(len(data)):
         print("Visit " + str(i) + " => " + data[i]["geozoneName"] + " @ " + data[i]["entryTime"])
 
-
-get_geo_zone_activity(deviceSerial, dateObject)
