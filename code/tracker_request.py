@@ -40,7 +40,12 @@ def get_geo_zone_list():
 
     :return: a list of unique strings representing the geo zones // RAD!!
     """
-    return []
+    data = send_query('geozones', device_serial=None)
+    if len(data) == 0:
+        return []
+    else:
+        return [entry['name'] for entry in data]
+
 
 
 def build_date_string_param(dates):
@@ -50,15 +55,29 @@ def build_date_string_param(dates):
 
 
 def get_geo_zone_activity(device_serial, dates):
-    geozone_data = {"queryType": "geozonevisits", "timeFrame": build_date_string_param(dates), "flags":"&reevaluate=true"}
-    send_query(geozone_data["queryType"], device_serial, geozone_data)
+    geozone_data = {"timeFrame": build_date_string_param(dates), "flags":"&reevaluate=true"}
+    send_query('geozonevisits', device_serial, geozone_data)
 
 
-def send_query(queryType, device_serial, specific_params):
-    url = "https://stickntrack.sensolus.com/rest/api/v2/" + queryType + "/" + device_serial
+def send_query(query_type, device_serial, specific_params=None):
+    """
+    :param query_type: type of query: [ 'geozonevisits', 'geozones' ]
+    :param device_serial: serial number of the tracker
+    :param specific_params: dictionary with aditional parameter specific for the query
+    :return: json dictionary with response from the tracker
+    """
 
-    params_string = "apiKey=" + apiKey + specific_params[
-        "timeFrame"] + specific_params["flags"] + "&_csrf=a24c8521-aa26-446d-8e65-4f24436bb888%20-H%20%22accept:%20application/json%22"
+    url = "https://stickntrack.sensolus.com/rest/api/v2/" + query_type
+
+    # Note that not all commands require the serial
+    if device_serial is not None:
+          url += "/" + device_serial
+
+    params_string = "apiKey=" + apiKey + "&_csrf=a24c8521-aa26-446d-8e65-4f24436bb888%20-H%20%22accept:%20application/json%22"
+
+    if specific_params is not None:
+        params_string  += ''.join(str(x) for x in specific_params.values())
+
     payload = ""
     headers = {
         'cache-control': "no-cache",
@@ -66,15 +85,13 @@ def send_query(queryType, device_serial, specific_params):
 
     response = requests.request("GET", url, data=payload, headers=headers, params=params_string)
 
-    # print(response.request.url) ## PRINTING THE URL ORIGINALLY CREATED TO SEND THE QUERY
-    print("=================")
-    # print(response.text) ## RAW RESPONSE
-    # print("=================")
+    data = json.loads(response.text)
 
-    data = json.loads(response.text)  # loads RETURNS A DICTIONARY
-    # print('Name of Tracker: ', data['name'])
+    if 'type' in data and data['type'] in ['error','unknown']:
+        raise Exception('executing command: url: {} data: {} headers: {} params: {} \n\n {}'.format(url, payload,
+                                                                                                    headers,
+                                                                                                    params_string,
+                                                                                                    data['message']))
 
-    # PRINT SOME OF THE GEO LOCATION DATA
-    for i in range(len(data)):
-        print("Visit " + str(i) + " => " + data[i]["geozoneName"] + " @ " + data[i]["entryTime"])
+    return data
 
