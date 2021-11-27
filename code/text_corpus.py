@@ -1,5 +1,3 @@
-
-
 # taken from https://www.sensolus.com/terms-conditions/
 import random
 
@@ -13,7 +11,13 @@ def get_verb():
 
 
 def modify_text(text):
-    return text.replace('<NOUN>', get_noun()).replace('<VERB>', get_verb())
+    while text.find('<NOUN>') != -1:
+        text = text.replace('<NOUN>', get_noun(), 1)
+
+    while text.find('<VERB>') != -1:
+        text = text.replace('<VERB>', get_verb(), 1)
+
+    return text
 
 
 contract_text = [
@@ -44,7 +48,7 @@ contract_text = [
     relating to the Hardware, <NOUN> and/or <NOUN> within a sufficient time.
     """,
     # from section 4: Cancellation
-	"""
+    """
 	In the event of the cancellation of the Agreement by the Customer (without this being due to a shortcoming of SENSOLUS), SENSOLUS <VERB> the right to charge the <NOUN>, Subscriptions and Services already provided (incl. <NOUN>). The aforementioned <NOUN> are increased with lump sum damages amounting to 10 percent of the total value of fees (excl. VAT) of the cancelled Agreement, with a minimum of €250, and such without prejudice to SENSOLUS’ right to compensation for higher proven damage. The same applies when SENSOLUS <VERB> the Agreement because of shortcomings of the Customer (without prejudice to other <NOUN>).
     """,
     # from section 5
@@ -61,28 +65,28 @@ contract_text = [
     However, SENSOLUS does not guarantee a certain <NOUN>.
     """,
     # from section 6: Delivery
-	"""
+    """
 	SENSOLUS delivers <NOUN> to the Customer as described in the Agreement.
     """,
-	"""
+    """
 	SENSOLUS retains the entire ownership of all <NOUN> delivered to the Customer for as long as the Customer has not fully paid the price, costs, interests and all other accessories related to purchase thereof.
     """,
-	"""
+    """
 	The Customer must <VERB> (i) the conformity of the Hardware with <NOUN>, and (ii) the proper functioning of the Hardware, upon delivery.
     """,
-	"""
+    """
 	If the Hardware presents <NOUN>, the Customer must immediately (and no later than seven (7) Business Days after the delivery) <VERB> the non-conformity and/or visible defect – at the risk of <NOUN> – by email, to the address: support@sensolus.com.
     """,
-	"""
+    """
 	The Customer must inform SENSOLUS of any hidden <NOUN> by email to the address <VERB>@sensolus.com no later than fourteen (14) Business Days after it has/should have been detected, and in any case within twelve (12) months upon delivery, at the risk of forfeiture.
     """,
-	"""
+    """
 	SENSOLUS shall <VERB> and examine the <NOUN> and investigate the complaint within ten (10) Business Days. The cost of such examinations shall be payable by SENSOLUS only to the extent the claim of the defect is found to be <NOUN>.
     """,
-	"""
+    """
 	SENSOLUS cannot be held liable for, nor does it warrant defects caused by: <NOUN>, <VERB> <NOUN> or <NOUN>.
     """,
-	"""
+    """
 	SENSOLUS cannot be held liable for, nor does it warrant defects caused by: An act of the Customer or a third party, regardless of whether these were caused by a <NOUN> or <NOUN>.
 	""",
     # from section 7
@@ -128,7 +132,7 @@ contract_text = [
     be agreed upon by the parties in the Order Form.
     """,
     # from section 10: Complaint
-	"""
+    """
 	Any complaints concerning SENSOLUS’ Solution shall only <VERB> if submitted to SENSOLUS in writing within a period of five (5) Business Days following the discovery of the <NOUN> by the Customer. Complaints shall always be submitted to SENSOLUS by e-mail to the address support@sensolus.com, containing a detailed justification of the complaint.
 	"""
     # from section 11
