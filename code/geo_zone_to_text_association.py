@@ -3,7 +3,7 @@ import text_corpus
 import random
 
 
-def associate_geo_zones_to_text_corpus():
+def associate_geo_zones():
     """
     Random 1:1 association of text elements and geozones
     :return: dictionary associating geo zone names to text section from corpus
