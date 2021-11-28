@@ -1,5 +1,6 @@
 #!/usr/bin/python
 import geo_zone_to_text_association
+import text_corpus
 import tracker_request
 import trackers
 import sched
@@ -22,6 +23,7 @@ if __name__ == '__main__':
         trackers.initialize()
         tracker_request.initialize()
         geo_zone_to_text_association.initialize()
+        text_corpus.initialize()
 
         scheduler.enter(update_period, 1, update_devices, (scheduler,))
         scheduler.run()

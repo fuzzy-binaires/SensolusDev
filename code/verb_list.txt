@@ -1,0 +1,4 @@
+eats
+sleeps
+plays
+smiles
