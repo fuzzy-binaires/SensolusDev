@@ -4,19 +4,18 @@ import requests
 import json
 from os.path import isfile
 from envparse import env
+from datetime import datetime
 
 apiKey = None
-deviceSerial = None
 
 
 def initialize():
     global apiKey
-    global deviceSerial
+
     # make sure the file exists
     if isfile('.env'):
         env.read_envfile('.env')
         apiKey = env.str('API_KEY')
-        deviceSerial = env.str('DEVICE_0')
     else:
         raise Exception('Environment file not found')
 
@@ -27,8 +26,8 @@ dateObject = {
         "day": 1
     },
     "to": {
-        "month": 10,
-        "day": 3
+        "month": datetime.now().month,
+        "day": datetime.now().day
     }
 }
 
@@ -42,10 +41,7 @@ def get_geo_zone_list():
     :return: a list of unique strings representing the geo zones // RAD!!
     """
     data = send_query('geozones', device_serial=None)
-    if len(data) == 0:
-        return []
-    else:
-        return [entry['name'] for entry in data]
+    return [entry['name'] for entry in data]
 
 
 def build_date_string_param(dates):

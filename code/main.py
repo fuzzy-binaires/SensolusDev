@@ -1,24 +1,30 @@
 #!/usr/bin/python
 import geo_zone_to_text_association
 import tracker_request
-import text_corpus
+import trackers
+import sched
+import time
+
+scheduler = sched.scheduler(time.time, time.sleep)
+update_period = 5  # refresh every 5 seconds
+
+
+def update_devices(sc):
+    print('-I- Updating devices')
+    for device in trackers.devices:
+        device.update()
+
+    scheduler.enter(update_period, 1, update_devices, (sc,))
+
 
 if __name__ == '__main__':
     try:
+        trackers.initialize()
         tracker_request.initialize()
+        geo_zone_to_text_association.initialize()
 
-        geo_zone_dict = geo_zone_to_text_association.associate_geo_zones()
-
-        print(geo_zone_dict)
-
-        for zone in geo_zone_dict:
-            idx = geo_zone_dict[zone]
-            print(zone, ':', text_corpus.modify_text( text_corpus.contract_text[idx] ) )
-
-        data = tracker_request.get_geo_zone_activity(tracker_request.deviceSerial, tracker_request.dateObject)
-
-        for i in range(len(data)):
-            print("Visit " + str(i) + " => " + data[i]["geozoneName"] + " @ " + data[i]["entryTime"])
+        scheduler.enter(update_period, 1, update_devices, (scheduler,))
+        scheduler.run()
 
     except Exception as err:
         print('Error in application: {}'.format(err))
