@@ -6,10 +6,6 @@ idx = {}
 
 
 def initialize():
-    """
-    Random 1:1 association of text elements and geozones
-    :return: dictionary associating geo zone names to text section from corpus
-    """
     global idx
     geo_zone_list = tracker_request.get_geo_zone_list()
 

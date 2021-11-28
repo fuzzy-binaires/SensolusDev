@@ -2,6 +2,9 @@ import tracker_request
 import text_corpus
 import geo_zone_to_text_association
 from os.path import isfile
+from datetime import datetime
+import utils
+
 devices = None
 
 
@@ -20,17 +23,47 @@ class Tracker:
         self.serial_number = serial_number
         self.current_geo_zone = None
         self.previous_geo_zone = None
+        self.activity_queue = []
+        self.last_update_date = '2021-01-01T00:00:00+0000'
+
+    def fill_activity_queue(self):
+        today = '{year}-{month}-{day}T00%3A00%3A00Z'.format(year=datetime.now().year,
+                                                            month=str(datetime.now().month).zfill(2),
+                                                            day=str(datetime.now().day).zfill(2))
+
+        print(
+            '-I- query geo zone activity for {} from {} to {}'.format(self.serial_number, self.last_update_date, today))
+
+        activities = tracker_request.get_geo_zone_activity(self.serial_number,
+                                                           start_date=self.last_update_date.replace(':', '%3A').replace(
+                                                               '+0000', 'Z'),
+                                                           end_date=today)
+
+        if len(activities) == 0:
+            return
+
+        for activity in activities:
+            if 'geozoneId' in activity.keys() and 'exitTime' in activity.keys() and 'geozoneName' in activity.keys():
+
+                self.activity_queue.append({'geozoneId': activity['geozoneId'], 'entryTime': activity['exitTime'],
+                                            'geozoneName': activity['geozoneName']})
 
     def update(self):
         try:
-            activity = tracker_request.get_geo_zone_activity(self.serial_number,tracker_request.dateObject)
-            if len(activity) == 0:
+            # print('-I- {} queue: {} - query start date: {}'.format(self.serial_number, len(self.activity_queue),
+            #                                                        self.last_update_date))
+            if len(self.activity_queue) == 0:
+                self.fill_activity_queue()
+
+            if len(self.activity_queue) == 0:
                 return
-            last_activity = activity[-1]
-            geo_zone_name = ''
-            if 'geozoneId' in last_activity:
-                self.current_geo_zone = last_activity['geozoneId']
-                geo_zone_name = last_activity['geozoneName']
+
+            last_activity = self.activity_queue.pop(-1)
+
+            self.current_geo_zone = last_activity['geozoneId']
+            geo_zone_name = last_activity['geozoneName']
+
+            self.last_update_date = utils.get_max_date(self.last_update_date, last_activity['entryTime'])
 
             if self.previous_geo_zone is None or self.previous_geo_zone != self.current_geo_zone:
                 # print the updated text here

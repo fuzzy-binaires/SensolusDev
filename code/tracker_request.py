@@ -20,16 +20,16 @@ def initialize():
         raise Exception('Environment file not found')
 
 
-dateObject = {
-    "from": {
-        "month": 10,
-        "day": 1
-    },
-    "to": {
-        "month": datetime.now().month,
-        "day": datetime.now().day
-    }
-}
+# dateObject = {
+#     "from": {
+#         "month": 10,
+#         "day": 1
+#     },
+#     "to": {
+#         "month": datetime.now().month,
+#         "day": datetime.now().day
+#     }
+# }
 
 
 ########
@@ -44,14 +44,23 @@ def get_geo_zone_list():
     return [entry['name'] for entry in data]
 
 
-def build_date_string_param(dates):
-    return "&from=2021-" + str(dates["from"]["month"]) + "-" + str(dates["from"]["day"]).zfill(
-        2) + "T00%3A00%3A00Z" + "&to=2021-" + str(dates["to"]["month"]) + "-" + str(dates["to"]["day"]).zfill(
-        2) + "T00%3A00%3A00Z"
+def build_date_string_param(start_date, end_date):
+    """
+    :param start_date: ISO8601 date string
+    :param end_date: ISO8601 date string
+    :return:
+    """
+    return '&from={start_date}&to={end_date}'.format(start_date=start_date, end_date=end_date)
 
 
-def get_geo_zone_activity(device_serial, dates):
-    geozone_data = {"timeFrame": build_date_string_param(dates), "flags": "&reevaluate=true"}
+def get_geo_zone_activity(device_serial, start_date, end_date):
+    """
+    :param device_serial:
+    :param start_date: ISO8601 date string
+    :param end_date: ISO8601 date string
+    :return: list of activity in date ranges
+    """
+    geozone_data = {"timeFrame": build_date_string_param(start_date, end_date), "flags": "&reevaluate=true"}
     return send_query('geozonevisits', device_serial, geozone_data)
 
 
