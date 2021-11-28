@@ -1,6 +1,18 @@
 import tracker_request
 import text_corpus
 import geo_zone_to_text_association
+from os.path import isfile
+devices = None
+
+
+def initialize():
+    global devices
+    file_name = 'device_serials.txt'
+    if not isfile(file_name):
+        raise Exception(' file not found {}'.format(file_name))
+
+    with open(file_name) as serial_file:
+        devices = [Tracker(serial_number.rstrip()) for serial_number in serial_file.readlines()]
 
 
 class Tracker:
