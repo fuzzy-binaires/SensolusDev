@@ -8,12 +8,14 @@ trackers = [tracker.Tracker('DLAPWT'), tracker.Tracker('WQ9ENJ')]
 scheduler = sched.scheduler(time.time, time.sleep)
 update_period = 5  # refresh every 5 seconds
 
+
 def update_devices(sc):
     print('-I- Updating devices')
     for device in trackers:
         device.update()
 
     scheduler.enter(update_period, 1, update_devices, (sc,))
+
 
 if __name__ == '__main__':
     try:

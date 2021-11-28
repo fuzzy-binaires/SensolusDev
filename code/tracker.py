@@ -8,7 +8,6 @@ class Tracker:
         self.serial_number = serial_number
         self.current_geo_zone = None
         self.previous_geo_zone = None
-        pass
 
     def update(self):
         try:

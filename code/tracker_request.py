@@ -4,8 +4,10 @@ import requests
 import json
 from os.path import isfile
 from envparse import env
+from datetime import datetime
 
 apiKey = None
+
 
 def initialize():
     global apiKey
@@ -24,8 +26,8 @@ dateObject = {
         "day": 1
     },
     "to": {
-        "month": 10,
-        "day": 3
+        "month": datetime.now().month,
+        "day": datetime.now().day
     }
 }
 
