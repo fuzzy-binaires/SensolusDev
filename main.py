@@ -1,8 +1,8 @@
 #!/usr/bin/python
-import consent_contract_scrambler.geo_zone_to_text_association
-import consent_contract_scrambler.text_corpus
-import consent_contract_scrambler.tracker_request
-import consent_contract_scrambler.trackers
+from consent_contract_scrambler import geo_zone_to_text_association
+from consent_contract_scrambler import text_corpus
+from consent_contract_scrambler import tracker_request
+from consent_contract_scrambler import trackers
 import sched
 import time
 
@@ -12,7 +12,7 @@ update_period = 5  # refresh every 5 seconds
 
 def update_devices(sc):
     print('-I- Updating devices')
-    for device in consent_contract_scrambler.trackers.devices:
+    for device in trackers.devices:
         device.update()
 
     scheduler.enter(update_period, 1, update_devices, (sc,))
@@ -20,10 +20,10 @@ def update_devices(sc):
 
 if __name__ == '__main__':
     try:
-        consent_contract_scrambler.trackers.initialize()
-        consent_contract_scrambler.tracker_request.initialize()
-        consent_contract_scrambler.geo_zone_to_text_association.initialize()
-        consent_contract_scrambler.text_corpus.initialize()
+        trackers.initialize()
+        tracker_request.initialize()
+        geo_zone_to_text_association.initialize()
+        text_corpus.initialize()
 
         scheduler.enter(update_period, 1, update_devices, (scheduler,))
         scheduler.run()
