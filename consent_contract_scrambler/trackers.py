@@ -1,16 +1,17 @@
-import tracker_request
-import text_corpus
-import geo_zone_to_text_association
+from .tracker_request import get_geo_zone_activity
+from .text_corpus import modify_text
+from .text_corpus import contract_text
+from .geo_zone_to_text_association import geo_zone_idx
 from os.path import isfile
 from datetime import datetime
-import utils
+from .utils import get_max_date
 
 devices = None
 
 
 def initialize():
     global devices
-    file_name = 'device_serials.txt'
+    file_name = './device_serials.txt'
     if not isfile(file_name):
         raise Exception(' file not found {}'.format(file_name))
 
@@ -31,10 +32,10 @@ class Tracker:
                                                             month=str(datetime.now().month).zfill(2),
                                                             day=str(datetime.now().day).zfill(2))
 
-        print(
-            '-I- query geo zone activity for {} from {} to {}'.format(self.serial_number, self.last_update_date, today))
+        # print(
+        #     '-I- query geo zone activity for {} from {} to {}'.format(self.serial_number, self.last_update_date, today))
 
-        activities = tracker_request.get_geo_zone_activity(self.serial_number,
+        activities = get_geo_zone_activity(self.serial_number,
                                                            start_date=self.last_update_date.replace(':', '%3A').replace(
                                                                '+0000', 'Z'),
                                                            end_date=today)
@@ -50,8 +51,9 @@ class Tracker:
 
     def update(self):
         try:
-            # print('-I- {} queue: {} - query start date: {}'.format(self.serial_number, len(self.activity_queue),
-            #                                                        self.last_update_date))
+            if len(self.activity_queue) > 0:
+                print('-I- {} queue: {} - query start date: {}'.format(self.serial_number, len(self.activity_queue),
+                                                                   self.last_update_date))
             if len(self.activity_queue) == 0:
                 self.fill_activity_queue()
 
@@ -63,12 +65,12 @@ class Tracker:
             self.current_geo_zone = last_activity['geozoneId']
             geo_zone_name = last_activity['geozoneName']
 
-            self.last_update_date = utils.get_max_date(self.last_update_date, last_activity['entryTime'])
+            self.last_update_date = get_max_date(self.last_update_date, last_activity['entryTime'])
 
             if self.previous_geo_zone is None or self.previous_geo_zone != self.current_geo_zone:
                 # print the updated text here
-                idx = geo_zone_to_text_association.idx[geo_zone_name]
-                print(self.serial_number, '@', geo_zone_name, ':', text_corpus.modify_text(text_corpus.contract_text[idx]))
+                idx = geo_zone_idx[geo_zone_name]
+                print(self.serial_number, '@', geo_zone_name, ':', modify_text(contract_text[idx]))
                 self.previous_geo_zone = self.current_geo_zone
 
         except Exception as err:

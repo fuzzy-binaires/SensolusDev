@@ -1,8 +1,8 @@
 #!/usr/bin/python
-import geo_zone_to_text_association
-import text_corpus
-import tracker_request
-import trackers
+from consent_contract_scrambler import geo_zone_to_text_association
+from consent_contract_scrambler import text_corpus
+from consent_contract_scrambler import tracker_request
+from consent_contract_scrambler import trackers
 import sched
 import time
 
