@@ -10,7 +10,7 @@ devices = None
 
 def initialize():
     global devices
-    file_name = 'device_serials.txt'
+    file_name = './device_serials.txt'
     if not isfile(file_name):
         raise Exception(' file not found {}'.format(file_name))
 
@@ -31,8 +31,8 @@ class Tracker:
                                                             month=str(datetime.now().month).zfill(2),
                                                             day=str(datetime.now().day).zfill(2))
 
-        print(
-            '-I- query geo zone activity for {} from {} to {}'.format(self.serial_number, self.last_update_date, today))
+        # print(
+        #     '-I- query geo zone activity for {} from {} to {}'.format(self.serial_number, self.last_update_date, today))
 
         activities = tracker_request.get_geo_zone_activity(self.serial_number,
                                                            start_date=self.last_update_date.replace(':', '%3A').replace(
@@ -50,8 +50,9 @@ class Tracker:
 
     def update(self):
         try:
-            # print('-I- {} queue: {} - query start date: {}'.format(self.serial_number, len(self.activity_queue),
-            #                                                        self.last_update_date))
+            if len(self.activity_queue) > 0:
+                print('-I- {} queue: {} - query start date: {}'.format(self.serial_number, len(self.activity_queue),
+                                                                   self.last_update_date))
             if len(self.activity_queue) == 0:
                 self.fill_activity_queue()
 

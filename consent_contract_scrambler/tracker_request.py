@@ -13,7 +13,7 @@ def initialize():
     global apiKey
 
     # make sure the file exists
-    if isfile('.env'):
+    if isfile('./.env'):
         env.read_envfile('.env')
         apiKey = env.str('API_KEY')
     else:

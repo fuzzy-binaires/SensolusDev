@@ -11,8 +11,8 @@ noun_list = []
 def initialize():
     global verb_list
     global noun_list
-    verb_file_name = 'verb_list.txt'
-    noun_file_name = 'noun_list.txt'
+    verb_file_name = './verb_list.txt'
+    noun_file_name = './noun_list.txt'
     if not isfile(verb_file_name):
         raise Exception(' file not found {}'.format(verb_file_name))
 
