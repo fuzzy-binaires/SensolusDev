@@ -110,14 +110,13 @@ class Adafruit_Thermal(Serial):
 			# clear, but the slower printing speed.
 
 			heatTime = kwargs.get('heattime', self.defaultHeatTime)
-			heatinterval = kwargs.get('heatinterval', 40)
 			self.writeBytes(
 			  27,       # Esc
 			  55,       # 7 (print settings)
 			  11,       # Heat dots
-			  heatTime, # Lib default
-			  heatinterval)       # Heat interval
-
+			  180, 	# Lib default
+			  8)       # Heat interval
+			
 			# Description of print density from p. 23 of manual:
 			# DC2 # n Set printing density
 			# Decimal: 18 35 n

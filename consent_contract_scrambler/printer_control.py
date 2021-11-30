@@ -5,7 +5,7 @@ from Adafruit_Thermal import *
 import math
 import time
 
-printer = Adafruit_Thermal("/dev/serial0", 19200, timeout=5, heatinterval=8)
+printer = Adafruit_Thermal("/dev/serial0", 19200, timeout=5)
 printer.begin()
 #printer.print("Go FuzzyMelt ~~~")
 #printer.feed(2)
