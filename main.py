@@ -9,13 +9,15 @@ import sched
 import time
 
 scheduler = sched.scheduler(time.time, time.sleep)
-update_period = 30  # refresh every n seconds
+update_period = 15  # refresh every n seconds
 
 
 def update_devices(sc):
     print('-I- Updating devices')
-    for device in trackers.devices:
-        device.update()
+
+    #for device in trackers.devices:
+        #device.update()
+    trackers.devices[0].update()
 
     scheduler.enter(update_period, 1, update_devices, (sc,))
 

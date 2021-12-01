@@ -1,15 +1,16 @@
 #!/usr/bin/python
 from __future__ import print_function
-from Adafruit_Thermal import *
+from .Adafruit_Thermal import *
 import math
 import time
 
-printer = None
 lineLength = 30 # CHARS THAT FIT IN PRINTER LINE LENGTH
 
 def initialize():
+	global printer
 	printer = Adafruit_Thermal("/dev/serial0", 19200, timeout=5)
-	printer.begin()
+	printer.begin(200) # heat setting 0-255-darkest
+	printer.setTimes(26000,2100) # MicroSecs for printOneScanline,feedOneBlankScanline
 
 def print_phrase(phrase):
 
@@ -27,12 +28,12 @@ def print_phrase(phrase):
 	for i in range(linesToPrint):
 		phraseInArray.append(phrase[i*lineLength:(i*lineLength)+lineLength])
 	
-	#print(phraseInArray)
+	print(phraseInArray)
 
 	# SEND TO PRINT, WITH PAUSES, AND THEN LEAVE 2 BLANK LINES
 	for p in phraseInArray:
 		printer.println(p)
-		time.sleep(0.5)
+		time.sleep(1)
 	printer.feed(1)
 	printer.println('================')
 	printer.feed(2)

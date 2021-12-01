@@ -5,7 +5,7 @@ from .geo_zone_to_text_association import geo_zone_idx
 from os.path import isfile
 from datetime import datetime
 from .utils import get_max_date
-from printer_control import print_phrase
+from .printer_control import print_phrase
 
 devices = None
 

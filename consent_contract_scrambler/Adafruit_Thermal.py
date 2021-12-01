@@ -113,9 +113,9 @@ class Adafruit_Thermal(Serial):
 			self.writeBytes(
 			  27,       # Esc
 			  55,       # 7 (print settings)
-			  11,       # Heat dots
-			  180, # Lib default heatTime
-			  8)       # Heat interval
+			  20,       # Heat dots
+			  200, # Lib default heatTime
+			  200)       # Heat interval
 
 			# Description of print density from p. 23 of manual:
 			# DC2 # n Set printing density
