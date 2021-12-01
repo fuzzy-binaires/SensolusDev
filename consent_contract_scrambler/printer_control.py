@@ -4,16 +4,20 @@ from Adafruit_Thermal import *
 import math
 import time
 
-printer = Adafruit_Thermal("/dev/serial0", 19200, timeout=5)
-printer.begin()
+printer = None
+lineLength = 30 # CHARS THAT FIT IN PRINTER LINE LENGTH
+
+def initialize():
+	printer = Adafruit_Thermal("/dev/serial0", 19200, timeout=5)
+	printer.begin()
 
 def print_phrase(phrase):
 
 	# PRINTER WORKS IF GIVEN EACH LINE SEPARATELY, WITH A DELAY IN BETWEEN
 	# SO, LET'S CUT THE PHRASES APPROPIATELY
-
+	
+	#lineLength = 30 # CHARS THAT FIT IN PRINTER LINE LENGTH
 	charCount = len(phrase)
-	lineLength = 30 # CHARS THAT FIT IN PRINTER LINE LENGTH
 	linesToPrint = math.floor(charCount / lineLength) + 1 # LINES NEEDED TO FIT ALL CHARS
 	#print('Chars: {} - Lines: {}'.format(charCount, linesToPrint))
 
@@ -28,7 +32,9 @@ def print_phrase(phrase):
 	# SEND TO PRINT, WITH PAUSES, AND THEN LEAVE 2 BLANK LINES
 	for p in phraseInArray:
 		printer.println(p)
-		time.sleep(1)
+		time.sleep(0.5)
+	printer.feed(1)
+	printer.println('================')
 	printer.feed(2)
 
 

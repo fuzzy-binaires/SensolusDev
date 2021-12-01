@@ -5,6 +5,7 @@ from .geo_zone_to_text_association import geo_zone_idx
 from os.path import isfile
 from datetime import datetime
 from .utils import get_max_date
+from printer_control import print_phrase
 
 devices = None
 
@@ -68,10 +69,18 @@ class Tracker:
             self.last_update_date = get_max_date(self.last_update_date, last_activity['entryTime'])
 
             if self.previous_geo_zone is None or self.previous_geo_zone != self.current_geo_zone:
-                # print the updated text here
+                
+                # TRIGGER PRINTING PROCEDURES
+
                 idx = geo_zone_idx[geo_zone_name]
-                print(self.serial_number, '@', geo_zone_name, ':', modify_text(contract_text[idx]))
+                text_from_contract = modify_text(contract_text[idx])
+
+                # print IN CONSOLE the updated text here
+                print(self.serial_number, '@', geo_zone_name, ':', text_from_contract)
                 self.previous_geo_zone = self.current_geo_zone
+
+                # SEND TO printer_control, TO PRINT WITH PHYSICAL THERMAL PRINTER
+                print_phrase(text_from_contract)
 
         except Exception as err:
             # don't kill the program but just ignore
