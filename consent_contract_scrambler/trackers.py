@@ -10,23 +10,23 @@ from .printer_control import print_phrase
 devices = None
 
 
-def initialize():
+def initialize(start_date):
     global devices
     file_name = './device_serials.txt'
     if not isfile(file_name):
         raise Exception(' file not found {}'.format(file_name))
 
     with open(file_name) as serial_file:
-        devices = [Tracker(serial_number.rstrip()) for serial_number in serial_file.readlines()]
+        devices = [Tracker(serial_number.rstrip(), start_date) for serial_number in serial_file.readlines()]
 
 
 class Tracker:
-    def __init__(self, serial_number):
+    def __init__(self, serial_number, starting_update_date):
         self.serial_number = serial_number
         self.current_geo_zone = None
         self.previous_geo_zone = None
         self.activity_queue = []
-        self.last_update_date = '2021-01-01T00:00:00+0000'
+        self.last_update_date = starting_update_date
 
     def fill_activity_queue(self):
         today = '{year}-{month}-{day}T00%3A00%3A00Z'.format(year=datetime.now().year,
@@ -69,8 +69,7 @@ class Tracker:
             self.last_update_date = get_max_date(self.last_update_date, last_activity['entryTime'])
 
             if self.previous_geo_zone is None or self.previous_geo_zone != self.current_geo_zone:
-                
-                # TRIGGER PRINTING PROCEDURES
+
 
                 idx = geo_zone_idx[geo_zone_name]
                 text_from_contract = modify_text(contract_text[idx])

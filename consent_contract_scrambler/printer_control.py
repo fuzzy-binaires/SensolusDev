@@ -7,12 +7,14 @@ import time
 lineLength = 20 # CHARS THAT FIT IN PRINTER LINE LENGTH
 zigzagBlockIndex = 0;
 
+
 def initialize():
 	global printer
 	printer = Adafruit_Thermal("/dev/serial0", 19200, timeout=5)
 	printer.begin(200) # heat setting 0-255-darkest
 	printer.setTimes(26000,2100) # MicroSecs for printOneScanline,feedOneBlankScanline
 	#zigzagBlockIndex = 0
+
 
 def format_text_block( phrases, type):
 	# FORMATTING TEXT IF USING ~20 CHARACTERS PER LINE (INSTEAD OF THE FULL 30 CHARS PER WIDTH)
