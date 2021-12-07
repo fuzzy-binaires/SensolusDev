@@ -30,8 +30,8 @@ if __name__ == '__main__':
                                                             day=str(datetime.now().day).zfill(2))
 
         parser = argparse.ArgumentParser(description='Query sensor network from initial date and generate text to print')
-        parser.add_argument('start_date', metavar='d', nargs='?', type=str, default=today,
-                            help='The start date to query for geo-zone updates. Format yy-mm-ddT00:00:00+0000')
+        parser.add_argument('--start_date', metavar='-d', nargs='?', type=str, default=today,
+                            help='The start date to query for geo-zone updates. Format yy-mm-dd')
         args = parser.parse_args()
 
         trackers.initialize('{}T00:00:00+0000'.format(args.start_date))
