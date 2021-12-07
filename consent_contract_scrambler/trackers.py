@@ -11,6 +11,7 @@ devices = None
 
 
 def initialize(start_date):
+    print('-I- Initializing start query from date {}'.format(start_date))
     global devices
     file_name = './device_serials.txt'
     if not isfile(file_name):

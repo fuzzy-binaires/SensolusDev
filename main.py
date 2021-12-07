@@ -25,7 +25,7 @@ def update_devices(sc):
 
 if __name__ == '__main__':
     try:
-        today = '{year}-{month}-{day}T00:00:00+0000'.format(year=datetime.now().year,
+        today = '{year}-{month}-{day}'.format(year=datetime.now().year,
                                                             month=str(datetime.now().month).zfill(2),
                                                             day=str(datetime.now().day).zfill(2))
 
@@ -34,7 +34,7 @@ if __name__ == '__main__':
                             help='The start date to query for geo-zone updates. Format yy-mm-ddT00:00:00+0000')
         args = parser.parse_args()
 
-        trackers.initialize(args.start_date)
+        trackers.initialize('{}T00:00:00+0000'.format(args.start_date))
         tracker_request.initialize()
         geo_zone_to_text_association.initialize()
         text_corpus.initialize()
