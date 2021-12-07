@@ -11,16 +11,15 @@ import sched
 import time
 
 scheduler = sched.scheduler(time.time, time.sleep)
-update_period = 15  # refresh every n seconds
+update_period = None
 
-
-def update_devices(sc):
+def update_devices(sc, update_period):
     print('-I- Updating devices')
 
     for device in trackers.devices:
         device.update()
 
-    scheduler.enter(update_period, 1, update_devices, (sc,))
+    scheduler.enter(update_period, 1, update_devices, (sc,update_period))
 
 
 if __name__ == '__main__':
@@ -32,7 +31,11 @@ if __name__ == '__main__':
         parser = argparse.ArgumentParser(description='Query sensor network from initial date and generate text to print')
         parser.add_argument('--start_date', metavar='-d', nargs='?', type=str, default=today,
                             help='The start date to query for geo-zone updates. Format yy-mm-dd')
+        parser.add_argument('--refresh_period', metavar='-r', nargs='?', type=int, default=60,
+                            help='The Period at which the system queries for data. In seconds. As Integer')
         args = parser.parse_args()
+        update_period = args.refresh_period
+        print('-I- Query Update Period: {}'.format(update_period))
 
         trackers.initialize('{}T00:00:00+0000'.format(args.start_date))
         tracker_request.initialize()
@@ -40,7 +43,7 @@ if __name__ == '__main__':
         text_corpus.initialize()
         printer_control.initialize()
 
-        scheduler.enter(update_period, 1, update_devices, (scheduler,))
+        scheduler.enter(update_period, 1, update_devices, (scheduler,update_period))
         scheduler.run()
 
     except Exception as err:
