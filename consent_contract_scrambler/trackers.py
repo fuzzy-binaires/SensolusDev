@@ -54,9 +54,9 @@ class Tracker:
 
     def update(self):
         try:
-            if len(self.activity_queue) > 0:
-                # print('|∆| :: Tracker {} queue: {} - query start date: {}'.format(self.serial_number, len(self.activity_queue),
-                                                                   self.last_update_date))
+            # if len(self.activity_queue) > 0:
+            #     print('|∆| :: Tracker {} queue: {} - query start date: {}'.format(self.serial_number, len(self.activity_queue),
+            #                                                        self.last_update_date))
             if len(self.activity_queue) == 0:
                 self.fill_activity_queue()
 
