@@ -19,12 +19,16 @@ def initialize(start_date):
         raise Exception(' file not found {}'.format(file_name))
 
     with open(file_name) as serial_file:
-        devices = [Tracker(serial_number.rstrip(), start_date) for serial_number in serial_file.readlines()]
+        devices = [Tracker(serial_number.rstrip().split(), start_date) for serial_number in serial_file.readlines()]
 
 
 class Tracker:
     def __init__(self, serial_number, starting_update_date):
-        self.serial_number = serial_number
+        if len(serial_number) != 2:
+            raise Exception('Error parsing serial/nick pair')
+
+        self.serial_number = serial_number[0]
+        self.nickname = serial_number[1]
         self.current_geo_zone = None
         self.previous_geo_zone = None
         self.activity_queue = []
@@ -80,7 +84,7 @@ class Tracker:
                 # print(self.serial_number, '@', geo_zone_name, ':', text_from_contract)
                 print('=========')
                 print(' ')
-                print(text_from_contract)
+                print('{nick}: {text}'.format(nick=self.nickname, text=text_from_contract))
                 # send text to a file
                 self.log_file.write(text_from_contract)
                 print(' ')
