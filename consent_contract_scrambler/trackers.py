@@ -29,6 +29,7 @@ class Tracker:
         self.previous_geo_zone = None
         self.activity_queue = []
         self.last_update_date = starting_update_date
+        self.log_file = open(concat_pwd('generated_text.txt'), 'w+')
 
     def fill_activity_queue(self):
         today = '{year}-{month}-{day}T00%3A00%3A00Z'.format(year=datetime.now().year,
@@ -80,6 +81,8 @@ class Tracker:
                 print('=========')
                 print(' ')
                 print(text_from_contract)
+                # send text to a file
+                self.log_file.write(text_from_contract)
                 print(' ')
                 print('=========')
                 self.previous_geo_zone = self.current_geo_zone
