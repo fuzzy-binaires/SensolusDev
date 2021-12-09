@@ -86,7 +86,7 @@ class Tracker:
                 print(' ')
                 print('{nick}: {text}'.format(nick=self.nickname, text=text_from_contract))
                 # send text to a file
-                self.log_file.write(text_from_contract)
+                self.log_file.write('{nick}: {text}'.format(nick=self.nickname, text=text_from_contract)))
                 print(' ')
                 print('=========')
                 self.previous_geo_zone = self.current_geo_zone
