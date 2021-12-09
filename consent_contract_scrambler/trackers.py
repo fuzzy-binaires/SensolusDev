@@ -5,6 +5,7 @@ from .geo_zone_to_text_association import geo_zone_idx
 from os.path import isfile
 from datetime import datetime
 from .utils import get_max_date
+from .utils import concat_pwd
 from .printer_control import print_phrase
 
 devices = None
@@ -13,7 +14,7 @@ devices = None
 def initialize(start_date):
     print('-I- Initializing start query from date {}'.format(start_date))
     global devices
-    file_name = './device_serials.txt'
+    file_name = concat_pwd('device_serials.txt')
     if not isfile(file_name):
         raise Exception(' file not found {}'.format(file_name))
 
@@ -70,7 +71,6 @@ class Tracker:
             self.last_update_date = get_max_date(self.last_update_date, last_activity['entryTime'])
 
             if self.previous_geo_zone is None or self.previous_geo_zone != self.current_geo_zone:
-
 
                 idx = geo_zone_idx[geo_zone_name]
                 text_from_contract = modify_text(contract_text[idx])

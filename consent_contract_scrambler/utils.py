@@ -1,4 +1,9 @@
 from datetime import datetime
+import os
+
+
+def concat_pwd(file_name):
+    return '{}/../{}'.format(os.path.abspath(os.path.dirname(__file__)), file_name)
 
 
 def get_max_date(date_str1, date_str2):

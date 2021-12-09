@@ -4,7 +4,7 @@ import requests
 import json
 from os.path import isfile
 from envparse import env
-from datetime import datetime
+from .utils import concat_pwd
 
 apiKey = None
 
@@ -13,27 +13,13 @@ def initialize():
     global apiKey
 
     # make sure the file exists
-    if isfile('./.env'):
-        env.read_envfile('.env')
+    env_file = concat_pwd('.env')
+    if isfile(env_file):
+        env.read_envfile(env_file)
         apiKey = env.str('API_KEY')
     else:
         raise Exception('Environment file not found')
 
-
-# dateObject = {
-#     "from": {
-#         "month": 10,
-#         "day": 1
-#     },
-#     "to": {
-#         "month": datetime.now().month,
-#         "day": datetime.now().day
-#     }
-# }
-
-
-########
-########
 
 def get_geo_zone_list():
     """

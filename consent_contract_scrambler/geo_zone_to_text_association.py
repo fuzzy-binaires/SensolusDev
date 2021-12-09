@@ -1,7 +1,8 @@
 from .tracker_request import get_geo_zone_list
 from .text_corpus import contract_text
 import random
-from os.path import isfile
+from .utils import concat_pwd
+import os
 
 geo_zone_idx = {}
 
@@ -17,8 +18,8 @@ def initialize():
 
     # check to see if we already have an existing geozone association
     # stored on a file. If this is the case then use it
-    association_file = 'geo_zone_to_text_association.txt'
-    if isfile(association_file):
+    association_file = concat_pwd('geo_zone_to_text_association.txt')
+    if os.path.isfile(association_file):
         print('-I- using existing association')
         with open(association_file) as f:
             random_text_indices = [int(line) for line in f]

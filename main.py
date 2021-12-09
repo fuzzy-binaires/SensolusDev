@@ -13,6 +13,7 @@ import time
 scheduler = sched.scheduler(time.time, time.sleep)
 update_period = None
 
+
 def update_devices(sc, update_period):
     print('-I- Updating devices')
 
