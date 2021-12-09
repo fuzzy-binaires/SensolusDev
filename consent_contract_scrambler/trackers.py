@@ -84,15 +84,16 @@ class Tracker:
                 # print(self.serial_number, '@', geo_zone_name, ':', text_from_contract)
                 print('=========')
                 print(' ')
-                print('{nick}: {text}'.format(nick=self.nickname, text=text_from_contract))
+                text = '{nick}: {text}'.format(nick=self.nickname, text=text_from_contract)
+                print(text)
                 # send text to a file
-                self.log_file.write('{nick}: {text}'.format(nick=self.nickname, text=text_from_contract))
+                self.log_file.write(text)
                 print(' ')
                 print('=========')
                 self.previous_geo_zone = self.current_geo_zone
 
                 # SEND TO printer_control, TO PRINT WITH PHYSICAL THERMAL PRINTER
-                print_phrase(text_from_contract)
+                print_phrase(text)
 
         except Exception as err:
             # don't kill the program but just ignore
