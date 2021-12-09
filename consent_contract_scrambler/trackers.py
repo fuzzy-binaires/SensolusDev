@@ -12,7 +12,7 @@ devices = None
 
 
 def initialize(start_date):
-    print('-I- Initializing start query from date {}'.format(start_date))
+    print('|∆| :: Querying from date {}'.format(start_date))
     global devices
     file_name = concat_pwd('device_serials.txt')
     if not isfile(file_name):
@@ -55,7 +55,7 @@ class Tracker:
     def update(self):
         try:
             if len(self.activity_queue) > 0:
-                print('-I- {} queue: {} - query start date: {}'.format(self.serial_number, len(self.activity_queue),
+                # print('|∆| :: Tracker {} queue: {} - query start date: {}'.format(self.serial_number, len(self.activity_queue),
                                                                    self.last_update_date))
             if len(self.activity_queue) == 0:
                 self.fill_activity_queue()
@@ -76,7 +76,12 @@ class Tracker:
                 text_from_contract = modify_text(contract_text[idx])
 
                 # print IN CONSOLE the updated text here
-                print(self.serial_number, '@', geo_zone_name, ':', text_from_contract)
+                # print(self.serial_number, '@', geo_zone_name, ':', text_from_contract)
+                print('=========')
+                print(' ')
+                print(text_from_contract)
+                print(' ')
+                print('=========')
                 self.previous_geo_zone = self.current_geo_zone
 
                 # SEND TO printer_control, TO PRINT WITH PHYSICAL THERMAL PRINTER
@@ -85,5 +90,5 @@ class Tracker:
         except Exception as err:
             # don't kill the program but just ignore
             # this tracker update
-            print('Error updating tracker {serial}: {msg}'.format(serial=self.serial_number, msg=err))
+            print('|∆| :: Error updating tracker {serial}: {msg}'.format(serial=self.serial_number, msg=err))
             pass

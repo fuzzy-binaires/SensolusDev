@@ -16,7 +16,7 @@ update_period = None
 
 
 def update_devices(sc, update_period):
-    print('-I- Updating devices')
+    print('|∆| :: Updating devices')
 
     for device in trackers.devices:
         device.update()
@@ -41,7 +41,7 @@ if __name__ == '__main__':
         if not re.match('\d\d\d\d\-\d\d\-\d\d', args.start_date):
             raise Exception('Please follow date format yyyy-dd-mm')
 
-        print('-I- Query Update Period: {}'.format(update_period))
+        print('|∆| :: Query Update Period: {}'.format(update_period))
 
         trackers.initialize('{}T00:00:00+0000'.format(args.start_date))
         tracker_request.initialize()
@@ -53,5 +53,5 @@ if __name__ == '__main__':
         scheduler.run()
 
     except Exception as err:
-        print('Error in application: {}'.format(err))
+        print(' ** Error in application: {} **'.format(err))
         exit(1)

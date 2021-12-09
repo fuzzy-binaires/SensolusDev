@@ -25,7 +25,7 @@ def format_text_block( phrases, type):
 	if type == 'centered':
 		for p in phrases:
 			formattedPhrases.append((' '*6) + p) ## ADD 8 SPACE BEFORE ALL PHRASES
-		print('Text format: Centered')
+		# print('Text format: Centered')
 		return formattedPhrases
 	elif type == 'zigzag-line':
 		# ZIG-ZAG: ADD INDENTATION, OR DOUBLE INDENT
@@ -34,7 +34,7 @@ def format_text_block( phrases, type):
 				formattedPhrases.append((' '*indent) + value)
 			else:
 				formattedPhrases.append((' '*(indent*6)) + value)
-		print('Text format: ZigZag')
+		# print('Text format: ZigZag')
 		return formattedPhrases
 	elif type == 'zigzag-block':
                 for p in phrases:
@@ -45,7 +45,7 @@ def format_text_block( phrases, type):
                 zigzagBlockIndex += 1
                 return formattedPhrases
 	else:
-		print('Text format: No modification')
+		# print('Text format: No modification')
 		return phrases
 
 
@@ -65,11 +65,11 @@ def print_phrase(phrase):
 	for i in range(linesToPrint):
 		phraseInArray.append(phrase[i*lineLength:(i*lineLength)+lineLength])
 	
-	print(phraseInArray)
-	print('--')
+	# print(phraseInArray)
+	# print('--')
 
 	formatted_phrases = format_text_block(phraseInArray, 'zigzag-block')
-	print(formatted_phrases)
+	# print(formatted_phrases)
 
 	# SEND TO PRINT, WITH PAUSES, AND THEN LEAVE 2 BLANK LINES
 	for p in formatted_phrases:
