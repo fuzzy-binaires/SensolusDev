@@ -5,7 +5,7 @@ import math
 import time
 
 lineLength = 20 # CHARS THAT FIT IN PRINTER LINE LENGTH
-zigzagBlockIndex = 0;
+zigzagBlockIndex = 0
 
 
 def initialize():
