@@ -27,6 +27,9 @@ def initialize():
         # generate random unique indices, ensure using the min available range
         random_text_indices = random.sample(range(0, text_len),
                                             min(text_len, len(geo_zone_list)))
+
+        random_text_indices = [x for x in range(0, text_len)]
+
         # save indexes to a file
         print('-I- saving existing association into {}'.format(association_file))
         with open(association_file, 'w') as f:
