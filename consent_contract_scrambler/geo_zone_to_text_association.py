@@ -33,6 +33,13 @@ def initialize():
             for idx in random_text_indices:
                 f.write('{}\n'.format(idx))
 
+        with open(concat_pwd('human_readable_geo_zone_to_text_association.txt'),'w') as f:
+            for idx in random_text_indices:
+                sentence = contract_text[idx]
+                f.write('name: {geozone_name} index {index} sentence: {sentence} \n'.format(geozone_name=geo_zone_list[idx],
+                                                                                    index=idx, sentence=sentence))
+
+
     for k, geo_zone in enumerate(geo_zone_list):
         # make sure association wraps around in case we have fewer text entries then geo zones
         geo_zone_idx[geo_zone] = random_text_indices[k % text_len]
