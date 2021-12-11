@@ -1,44 +1,46 @@
-plays
-smiles
-share
-offer
-not assume
-support
-refuse
-accept refusal
-force engagement
-open
-provides appropiate access
-harass
-project into the future
-be informed
-receive allyship
-collaborate
-disagree
-relate
-organize
-dissociate
-honor
-practice
-be aware
-humor
-listen
-report
-regret
-offer assistance
-deny assistance
-invite
-wait
-code
-respect
-gather
-care
-tinker
-hack
-resist
 accept
-act in solidarity with
-switch
-test
-host
-replace
+change
+continue
+decide to risk
+discontinue
+invite
+inform
+join
+listen
+play
+reverse
+undo
+chose
+remind
+liberate
+embody
+attune
+tune
+trust
+undo
+withdraw
+push
+exit
+implicate
+imply
+doubt
+obfuscate
+enable
+embody
+reverse
+doubt
+overcome
+hesitate
+stop
+sense
+unveil
+wish
+experiment
+dare
+relate
+know
+contextualize
+differ
+experience
+sync
+share
