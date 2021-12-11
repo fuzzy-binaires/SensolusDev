@@ -33,7 +33,7 @@ if __name__ == '__main__':
         parser = argparse.ArgumentParser(description='Query sensor network from initial date and generate text to print')
         parser.add_argument('--start_date', metavar='-d', nargs='?', type=str, default=today,
                             help='The start date to query for geo-zone updates. Format yyyy-mm-dd')
-        parser.add_argument('--refresh_period', metavar='-r', nargs='?', type=int, default=60,
+        parser.add_argument('--refresh_period', metavar='-r', nargs='?', type=int, default=600,
                             help='The Period at which the system queries for data. In seconds. As Integer')
         args = parser.parse_args()
         update_period = args.refresh_period

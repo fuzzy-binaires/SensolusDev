@@ -33,3 +33,33 @@ It is also possible to specify a custom geo-zone query date in the past by using
 ```bash
 $ python3 main.py --start_date 2021-03-24
 ```
+
+or modify the frequency at which you can query for new data (in seconds, default is 60):
+
+```bash
+$ python3 main.py --refresh_period 120
+```
+
+and you can put one right after the other one
+
+```bash
+$ python3 main.py --start_date 2021-03-24 --refresh_period 120
+```
+
+
+## Auto Startup and ShutDown scripts
+
+Startup Script for automatically launching the python script when powered on:
+```bash
+/home/pi/.config/autostart/clock.desktop
+```
+
+Auto-shutdown script: A cronJob that triggers at 22:00 every day:
+Edit this file:
+```bash
+sudo crontab -e
+```
+at the end of it, modify/add this line:
+```bash
+22 00 * * * /usr/sbin/shutdown -h now
+```

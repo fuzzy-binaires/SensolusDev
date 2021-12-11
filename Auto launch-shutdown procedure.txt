@@ -1,0 +1,8 @@
+
+Startup Script for automatically launching the python script when powered on:
+/home/pi/.config/autostart/clock.desktop
+
+Auto-shutdown script: A cronJob that triggers at 22:00 every day:
+Edit this file: sudo crontab -e
+at the end of it, modify/add this line:
+22 00 * * * /usr/sbin/shutdown -h now
